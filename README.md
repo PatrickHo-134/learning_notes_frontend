@@ -1,3 +1,5 @@
+This is the repo for the frontend of my project **Learning Notes App**
+
 # How to build this project
 
 ## Create React app
@@ -36,6 +38,28 @@ Add this reducer with other reducers in the `src/reducers/index.js` file
 Note: At the moment, we can create mock data for the UI to display Learning Notes list as the frontend is still not able to send requests to the backend yet.
 
 (To allow frontend to make successful requests to backend, we need to configure Django backend to include the Access-Control-Allow-Origin header in its responses, allowing requests from the frontend domain (http://localhost:3000).)
+
+## Create **LearningNoteCard.js** to display the information of a single learning note.
+We'll add the user's name, date created, title, content, and date updated (if available) to the card.
+We use `moment` package to format the date strings (created_at and updated_at) to a more human-readable format.
+
+```
+npm install moment
+```
+
+### Install `reactstrap` to add styles to UI components
+Run this code
+```
+npm install reactstrap bootstrap
+
+```
+
+### Adding style to the component
+Create a new file called **LearningNoteCard.css** in the **src/components** directory and define a CSS class for learning-note-card
+
+
+
+
 
 
 # Questions:

@@ -1,0 +1,23 @@
+/* LearningNoteCard.css */
+
+.learning-note-card {
+  margin: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.learning-note-card .card-title {
+  margin-bottom: 5px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.learning-note-card .card-text {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Add more styles as needed for customizing the component appearance */

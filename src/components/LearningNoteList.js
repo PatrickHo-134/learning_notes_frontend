@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLearningNotes } from '../actions/learningNoteActions';
+import LearningNoteCard from './LearningNoteCard';
 
 let note1 = {
      "id": 1,
@@ -35,13 +36,12 @@ const LearningNoteList = () => {
 
   return (
     <div>
-      <h2>Learning Notes</h2>
-      {learningNotes.map((note) => (
-        <div key={note.id}>
-          <h3>{note.title}</h3>
-          <p>{note.content}</p>
-        </div>
-      ))}
+      <h2>Time Line</h2>
+      {learningNotes.length === 0 ? (
+        <p>Your Time Line is empty. Let's create your first note.</p>
+      ) : (
+        learningNotes.map((note) => <LearningNoteCard key={note.id} learningNote={note} />)
+      )}
     </div>
   );
 };
