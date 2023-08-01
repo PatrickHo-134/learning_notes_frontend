@@ -57,6 +57,25 @@ npm install reactstrap bootstrap
 ### Adding style to the component
 Create a new file called **LearningNoteCard.css** in the **src/components** directory and define a CSS class for learning-note-card
 
+## Create **AddLearningNoteModal.js** in the **src/components**
+In this part, we need to install package `react-icons` to render some icons in our components.
+```
+npm install react-icons
+```
+
+Install Material-UI package to build modal.
+
+```
+npm install @mui/material @mui/icons-material @emotion/react @emotion/styled
+```
+
+Create a button and a modal for adding new notes in `AddLearningNoteModal.js`
+
+Add `AddLearningNoteModal` component to **LearningNoteList.js**
+
+**Up till this point, the frontend can pop up a modal with input form to add a new learning note but the backend doesn't accept the request because the application requires users to log in. However, user login feature is not implemented yet so form submission won't work for now. If the backend sets permission class to `AllowAny`, we still see a list of learning notes displayed. If permission class is set to `IsAuthenticated`, the UI will display nothing.**
+
+
 
 
 
@@ -77,3 +96,9 @@ It is recommended to use the configureStore method from @reduxjs/toolkit, which 
      npm install @reduxjs/toolkit
      ```
 - Create the Redux store using `configureStore`
+
+## 3. How to resolve issue with Mac constantly asking for permission to install new packages?
+Run this command
+```
+sudo chown -R 501:20 "/Users/patrick/.npm"
+```

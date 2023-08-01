@@ -42,7 +42,7 @@ export const fetchLearningNotes = () => {
   return (dispatch) => {
     dispatch(fetchLearningNotesRequest());
     axios
-      .get('http://127.0.0.1:8000/api/learning_notes/') // Replace with your Django backend API endpoint
+      .get('http://127.0.0.1:8000/api/learning_notes/')
       .then((response) => {
         const learningNotes = response.data;
         dispatch(fetchLearningNotesSuccess(learningNotes));
@@ -58,7 +58,7 @@ export const createLearningNote = (newLearningNote) => {
   return (dispatch) => {
     dispatch(createLearningNoteRequest());
     axios
-      .post('http://127.0.0.1:8000/api/learning_notes', newLearningNote) // Replace with your Django backend API endpoint
+      .post('http://127.0.0.1:8000/api/learning_notes', newLearningNote)
       .then((response) => {
         const createdLearningNote = response.data;
         dispatch(createLearningNoteSuccess(createdLearningNote));
