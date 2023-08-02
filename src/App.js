@@ -1,12 +1,21 @@
 import React from 'react';
-import LearningNoteList from './components/LearningNoteList';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LandingPage from './components/LandingPage';
+import LearningNoteList from './components/LearningNoteList'
+import { Provider } from 'react-redux';
+import store from './store';
 
 const App = () => {
   return (
-    <div>
-      <h1>My Learning Note App</h1>
-      <LearningNoteList />
-    </div>
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/timeline" element={<LearningNoteList />} />
+          {/* Add other routes as needed */}
+        </Routes>
+      </Router>
+    </Provider>
   );
 };
 

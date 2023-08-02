@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { createLearningNote } from '../actions/learningNoteActions';
 import { Button, Modal, Box, TextField, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
-const AddLearningNoteModal = ({ onAddNote }) => {
+const AddLearningNoteModal = () => {
+  const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -20,32 +23,8 @@ const AddLearningNoteModal = ({ onAddNote }) => {
       user: currentUser,
     };
 
-    const authToken = localStorage.getItem("authToken");
-    if (!authToken) {
-      console.error("Authentication token not found");
-      return;
-    }
-
     try {
-      console.log(newNote);
-      const response = await fetch(
-        "http://localhost:8000/api/learning_notes/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${authToken}`,
-          },
-          body: JSON.stringify(newNote),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to add learning note");
-      }
-
-      const data = await response.json();
-      onAddNote(data); // Update the local state with the new note data
+      dispatch(createLearningNote(newNote));
       toggleModal();
     } catch (error) {
       console.error("Error adding learning note:", error);

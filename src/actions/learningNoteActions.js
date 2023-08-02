@@ -1,12 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
 
 // Action Types
-export const FETCH_LEARNING_NOTES_REQUEST = 'FETCH_LEARNING_NOTES_REQUEST';
-export const FETCH_LEARNING_NOTES_SUCCESS = 'FETCH_LEARNING_NOTES_SUCCESS';
-export const FETCH_LEARNING_NOTES_FAILURE = 'FETCH_LEARNING_NOTES_FAILURE';
-export const CREATE_LEARNING_NOTE_REQUEST = 'CREATE_LEARNING_NOTE_REQUEST';
-export const CREATE_LEARNING_NOTE_SUCCESS = 'CREATE_LEARNING_NOTE_SUCCESS';
-export const CREATE_LEARNING_NOTE_FAILURE = 'CREATE_LEARNING_NOTE_FAILURE';
+export const FETCH_LEARNING_NOTES_REQUEST = "FETCH_LEARNING_NOTES_REQUEST";
+export const FETCH_LEARNING_NOTES_SUCCESS = "FETCH_LEARNING_NOTES_SUCCESS";
+export const FETCH_LEARNING_NOTES_FAILURE = "FETCH_LEARNING_NOTES_FAILURE";
+export const CREATE_LEARNING_NOTE_REQUEST = "CREATE_LEARNING_NOTE_REQUEST";
+export const CREATE_LEARNING_NOTE_SUCCESS = "CREATE_LEARNING_NOTE_SUCCESS";
+export const CREATE_LEARNING_NOTE_FAILURE = "CREATE_LEARNING_NOTE_FAILURE";
 
 // Action Creators
 export const fetchLearningNotesRequest = () => ({
@@ -39,10 +39,18 @@ export const createLearningNoteFailure = (error) => ({
 
 // Thunk to fetch learning notes from the backend
 export const fetchLearningNotes = () => {
+  const authToken = localStorage.getItem("token");
+
   return (dispatch) => {
     dispatch(fetchLearningNotesRequest());
     axios
-      .get('http://127.0.0.1:8000/api/learning_notes/')
+      .get("http://127.0.0.1:8000/api/learning_notes/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${authToken}`,
+        },
+      })
       .then((response) => {
         const learningNotes = response.data;
         dispatch(fetchLearningNotesSuccess(learningNotes));
@@ -55,10 +63,18 @@ export const fetchLearningNotes = () => {
 
 // Thunk to create a new learning note
 export const createLearningNote = (newLearningNote) => {
+  const authToken = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Token ${authToken}`,
+  };
+
   return (dispatch) => {
     dispatch(createLearningNoteRequest());
     axios
-      .post('http://127.0.0.1:8000/api/learning_notes', newLearningNote)
+      .post("http://localhost:8000/api/learning_notes/", newLearningNote, {
+        headers: headers,
+      })
       .then((response) => {
         const createdLearningNote = response.data;
         dispatch(createLearningNoteSuccess(createdLearningNote));
