@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from 'react-redux';
-import { createLearningNote } from '../actions/learningNoteActions';
+import { useDispatch } from "react-redux";
+import { createLearningNote } from "../actions/learningNoteActions";
 import { Button, Modal, Box, TextField, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -25,6 +25,9 @@ const AddLearningNoteModal = () => {
 
     try {
       dispatch(createLearningNote(newNote));
+      // Clear the form fields on successful submission
+      setTitle("");
+      setContent("");
       toggleModal();
     } catch (error) {
       console.error("Error adding learning note:", error);

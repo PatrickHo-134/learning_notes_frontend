@@ -95,7 +95,10 @@ Add `AddLearningNoteModal` component to **LearningNoteList.js**
      npm install react-router-dom
      ```
 
-
+## 8. Implement feature for archiving note
+- In **LearningNoteCard.js**, we use IconButton from Material-UI to create the meatballs menu icon with options `archive` and `edit` a learning note.
+- In **learningNoteActions.js**, create `archiveLearningNote` action for archiving a learning note
+- In **learningNoteReducer.js**, update `learningNoteReducer` by adding actions of archiving notes.
 
 
 
