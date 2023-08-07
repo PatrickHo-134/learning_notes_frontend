@@ -106,6 +106,8 @@ Add `AddLearningNoteModal` component to **LearningNoteList.js**
 - Create the `updateLearningNote` action in **learningNoteActions.js** file to send a request to the backend to update the learning note's title and content
 - Import action types related to updating a learning note in **learningNoteReducer.js**
 
+## 10. Add feature to delete notes
+- This is straightforward and similar to archiving note
 
 # Questions:
 ## 1. How to fix issue with 'Insufficient permissions' in VSCode?

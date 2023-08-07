@@ -131,6 +131,49 @@ export const archiveLearningNote = (id) => {
   };
 };
 
+export const DELETE_LEARNING_NOTE_REQUEST = "DELETE_LEARNING_NOTE_REQUEST";
+export const DELETE_LEARNING_NOTE_SUCCESS = "DELETE_LEARNING_NOTE_SUCCESS";
+export const DELETE_LEARNING_NOTE_FAILURE = "DELETE_LEARNING_NOTE_FAILURE";
+
+export const deleteLearningNoteRequest = () => {
+  return { type: DELETE_LEARNING_NOTE_REQUEST };
+};
+
+export const deleteLearningNoteSuccess = (id) => {
+  return { type: DELETE_LEARNING_NOTE_SUCCESS, noteId: id };
+};
+
+export const deleteLearningNoteFailure = (error) => {
+  return { type: DELETE_LEARNING_NOTE_FAILURE, payload: error };
+};
+
+export const deleteLearningNote = (id) => {
+  const authToken = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Token ${authToken}`,
+  };
+
+  return (dispatch) => {
+    dispatch(deleteLearningNoteRequest());
+
+    axios
+      .delete(`http://localhost:8000/api/learning_notes/${id}/delete/`, {
+        headers: headers,
+      })
+      .then((response) => {
+        dispatch(deleteLearningNoteSuccess(id));
+      })
+      .catch((error) => {
+        dispatch(
+          deleteLearningNoteFailure(
+            "Failed to delete learning note. Please try again."
+          )
+        );
+      });
+  };
+};
+
 export const UPDATE_LEARNING_NOTE_REQUEST = "UPDATE_LEARNING_NOTE_REQUEST";
 export const UPDATE_LEARNING_NOTE_SUCCESS = "UPDATE_LEARNING_NOTE_SUCCESS";
 export const UPDATE_LEARNING_NOTE_FAILURE = "UPDATE_LEARNING_NOTE_FAILURE";

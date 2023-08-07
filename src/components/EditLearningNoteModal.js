@@ -26,6 +26,7 @@ const EditLearningNoteModal = ({ learningNote, onClose }) => {
           p: 4,
           borderRadius: 8,
           minWidth: "70%",
+          minHeight: "70%",
         }}
       >
         <TextField
@@ -40,7 +41,7 @@ const EditLearningNoteModal = ({ learningNote, onClose }) => {
           variant="outlined"
           fullWidth
           multiline
-          rows={4}
+          rows={20}
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />

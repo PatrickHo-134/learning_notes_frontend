@@ -57,6 +57,7 @@ const AddLearningNoteModal = () => {
             p: 4,
             borderRadius: 8,
             minWidth: "70%",
+            minHeight: "70%",
           }}
         >
           <Typography variant="h5">Add New Learning Note</Typography>
@@ -69,7 +70,7 @@ const AddLearningNoteModal = () => {
           <TextField
             label="Content"
             multiline
-            rows={4}
+            rows={20}
             fullWidth
             value={content}
             onChange={(e) => setContent(e.target.value)}

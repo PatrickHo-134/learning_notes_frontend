@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { MoreVert as MoreVertIcon } from "@mui/icons-material";
 import moment from "moment";
-import { archiveLearningNote } from "../actions/learningNoteActions";
+import { archiveLearningNote, deleteLearningNote } from "../actions/learningNoteActions";
 import EditLearningNoteModal from './EditLearningNoteModal';
 
 const LearningNoteCard = ({ learningNote }) => {
@@ -30,6 +30,11 @@ const LearningNoteCard = ({ learningNote }) => {
 
   const handleArchive = () => {
     dispatch(archiveLearningNote(learningNote.id));
+    handleMenuClose();
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteLearningNote(learningNote.id));
     handleMenuClose();
   };
 
@@ -81,7 +86,7 @@ const LearningNoteCard = ({ learningNote }) => {
       >
         <MenuItem onClick={handleEdit}>Edit</MenuItem>
         <MenuItem onClick={handleArchive}>Archive</MenuItem>
-        {/* You can add more menu items here for other actions */}
+        <MenuItem onClick={handleDelete}>Delete</MenuItem>
       </Menu>
       {showEditModal && (
         <EditLearningNoteModal
