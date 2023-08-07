@@ -56,6 +56,7 @@ const AddLearningNoteModal = () => {
             boxShadow: 24,
             p: 4,
             borderRadius: 8,
+            minWidth: "70%",
           }}
         >
           <Typography variant="h5">Add New Learning Note</Typography>

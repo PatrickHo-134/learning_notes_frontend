@@ -130,3 +130,46 @@ export const archiveLearningNote = (id) => {
       });
   };
 };
+
+export const UPDATE_LEARNING_NOTE_REQUEST = "UPDATE_LEARNING_NOTE_REQUEST";
+export const UPDATE_LEARNING_NOTE_SUCCESS = "UPDATE_LEARNING_NOTE_SUCCESS";
+export const UPDATE_LEARNING_NOTE_FAILURE = "UPDATE_LEARNING_NOTE_FAILURE";
+
+export const updateLearningNoteRequest = () => ({
+  type: UPDATE_LEARNING_NOTE_REQUEST,
+});
+
+export const updateLearningNoteSuccess = (newLearningNote) => ({
+  type: UPDATE_LEARNING_NOTE_SUCCESS,
+  payload: newLearningNote,
+});
+
+export const updateLearningNoteFailure = (error) => ({
+  type: UPDATE_LEARNING_NOTE_FAILURE,
+  payload: error,
+});
+
+export const updateLearningNote = (id, data) => {
+  const authToken = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Token ${authToken}`,
+  };
+
+  return (dispatch) => {
+    dispatch(updateLearningNoteRequest());
+    axios
+      .patch(`http://localhost:8000/api/learning_notes/${id}/`, data, {
+        headers: headers,
+      })
+      .then((response) => {
+        const updatedLearningNote = response.data;
+        console.log(updatedLearningNote);
+        dispatch(updateLearningNoteSuccess(updatedLearningNote));
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(updateLearningNoteFailure('Failed to update learning note. Please try again.'));
+      });
+  };
+};
