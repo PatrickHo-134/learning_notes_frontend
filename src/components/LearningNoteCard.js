@@ -11,8 +11,12 @@ import {
 } from "@mui/material";
 import { MoreVert as MoreVertIcon } from "@mui/icons-material";
 import moment from "moment";
-import { archiveLearningNote, deleteLearningNote } from "../actions/learningNoteActions";
-import EditLearningNoteModal from './EditLearningNoteModal';
+import {
+  archiveLearningNote,
+  deleteLearningNote,
+} from "../actions/learningNoteActions";
+import EditLearningNoteModal from "./EditLearningNoteModal";
+import { AutoHeightQuill } from "./ReactQuill";
 
 const LearningNoteCard = ({ learningNote }) => {
   const { user, created_at, title, content, updated_at } = learningNote;
@@ -44,7 +48,7 @@ const LearningNoteCard = ({ learningNote }) => {
   };
 
   return (
-    <Card variant="outlined" sx={{marginBottom:"1rem"}} gutterBottom>
+    <Card variant="outlined" sx={{ marginBottom: "1rem" }} gutterBottom>
       <CardContent>
         <CardHeader
           action={
@@ -53,32 +57,45 @@ const LearningNoteCard = ({ learningNote }) => {
             </IconButton>
           }
           title={
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: "bold" }}
-              color="text.primary"
-              gutterBottom
-            >
-              {title}
-            </Typography>
+            <div>
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: "bold" }}
+                color="text.primary"
+                gutterBottom
+              >
+                {title}
+              </Typography>
+
+              <Typography
+                variant="caption"
+                component="pre"
+                style={{ whiteSpace: "pre-line" }}
+                gutterBottom
+              >
+                Date Created:{" "}
+                {moment(created_at).format("MMMM Do YYYY, h:mm a")}
+              </Typography>
+
+              {updated_at && (
+                <Typography
+                  variant="caption"
+                  component="pre"
+                  style={{ whiteSpace: "pre-line" }}
+                  gutterBottom
+                >
+                  Date Updated:{" "}
+                  {moment(updated_at).format("MMMM Do YYYY, h:mm a")}
+                </Typography>
+              )}
+            </div>
           }
           sx={{ padding: "0" }}
         />
 
-        <Typography variant="body1" component="pre" style={{ whiteSpace: 'pre-line' }} gutterBottom>
-          {content}
-        </Typography>
-
-        <Typography variant="caption" component="pre" style={{ whiteSpace: 'pre-line' }} gutterBottom>
-          Date Created: {moment(created_at).format("MMMM Do YYYY, h:mm a")}
-        </Typography>
-
-        {updated_at && (
-          <Typography variant="caption" component="pre" style={{ whiteSpace: 'pre-line' }} gutterBottom>
-            Date Updated: {moment(updated_at).format("MMMM Do YYYY, h:mm a")}
-          </Typography>
-        )}
+        <AutoHeightQuill content={content} />
       </CardContent>
+
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}

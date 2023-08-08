@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createLearningNote } from "../actions/learningNoteActions";
 import { Button, Modal, Box, TextField, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+
+import { createLearningNote } from "../actions/learningNoteActions";
+import { NoteContent } from "./ReactQuill";
 
 const AddLearningNoteModal = () => {
   const dispatch = useDispatch();
@@ -12,6 +14,8 @@ const AddLearningNoteModal = () => {
 
   const toggleModal = () => {
     setModalOpen(!modalOpen);
+    setTitle("");
+    setContent("");
   };
 
   const handleAddNote = async () => {
@@ -45,6 +49,7 @@ const AddLearningNoteModal = () => {
       >
         <AddIcon />
       </Button>
+
       <Modal open={modalOpen} onClose={toggleModal}>
         <Box
           sx={{
@@ -54,27 +59,21 @@ const AddLearningNoteModal = () => {
             transform: "translate(-50%, -50%)",
             bgcolor: "background.paper",
             boxShadow: 24,
-            p: 4,
-            borderRadius: 8,
+            p: 3,
+            borderRadius: 2,
             minWidth: "70%",
-            minHeight: "70%",
+            maxHeight: "90%",
           }}
         >
-          <Typography variant="h5">Add New Learning Note</Typography>
           <TextField
             label="Title"
             fullWidth
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-          <TextField
-            label="Content"
-            multiline
-            rows={20}
-            fullWidth
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
+
+          <NoteContent content={content} setContent={setContent} />
+
           <Button
             variant="contained"
             color="primary"

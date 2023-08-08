@@ -109,6 +109,12 @@ Add `AddLearningNoteModal` component to **LearningNoteList.js**
 ## 10. Add feature to delete notes
 - This is straightforward and similar to archiving note
 
+## 11. Implement a rich text editor for the content of learning notes
+- Install `react-quill`
+- Import and use `react-quill` in **AddLearningNoteModal.js**, **EditLearningNoteModal.js** and **LearningNoteCard.js**
+- In **LearningNoteCard.js**, use `dangerouslySetInnerHTML` to display the content `LearningNoteCard`
+- Add style for ReactQuill components in **src/App.css**
+
 # Questions:
 ## 1. How to fix issue with 'Insufficient permissions' in VSCode?
 Run this command

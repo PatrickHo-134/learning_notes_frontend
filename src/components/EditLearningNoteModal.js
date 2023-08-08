@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Modal, Box, TextField, Button } from "@mui/material";
+
 import { updateLearningNote } from "../actions/learningNoteActions";
+import { NoteContent } from "./ReactQuill";
 
 const EditLearningNoteModal = ({ learningNote, onClose }) => {
   const [title, setTitle] = useState(learningNote.title);
@@ -22,11 +24,10 @@ const EditLearningNoteModal = ({ learningNote, onClose }) => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           bgcolor: "background.paper",
-          boxShadow: 24,
-          p: 4,
-          borderRadius: 8,
+          p: 3,
+          borderRadius: 2,
           minWidth: "70%",
-          minHeight: "70%",
+          maxHeight: "90%",
         }}
       >
         <TextField
@@ -36,15 +37,9 @@ const EditLearningNoteModal = ({ learningNote, onClose }) => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <TextField
-          label="Content"
-          variant="outlined"
-          fullWidth
-          multiline
-          rows={20}
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
+
+        <NoteContent content={content} setContent={setContent} />
+
         <Button variant="contained" color="primary" onClick={handleSave}>
           Save
         </Button>
