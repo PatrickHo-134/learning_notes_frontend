@@ -11,8 +11,7 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/timeline" element={<LearningNoteList />} />
-          {/* Add other routes as needed */}
+          <Route path="/timeline/:userId" element={<LearningNoteList />} />
         </Routes>
       </Router>
     </Provider>

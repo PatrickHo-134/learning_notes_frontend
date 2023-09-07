@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//// FETCH LEARNING NOTES
 // Action Types
 export const FETCH_LEARNING_NOTES_REQUEST = "FETCH_LEARNING_NOTES_REQUEST";
 export const FETCH_LEARNING_NOTES_SUCCESS = "FETCH_LEARNING_NOTES_SUCCESS";
@@ -20,6 +21,30 @@ export const fetchLearningNotesFailure = (error) => ({
   payload: error,
 });
 
+export const fetchLearningNotes = (userInfo) => {
+  return (dispatch) => {
+    dispatch(fetchLearningNotesRequest());
+    axios
+      .get(`http://127.0.0.1:8000/api/timeline/${userInfo.id}/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      })
+      .then((response) => {
+        const learningNotes = response.data;
+        dispatch(fetchLearningNotesSuccess(learningNotes));
+      })
+      .catch((error) => {
+        dispatch(fetchLearningNotesFailure(error.message));
+      });
+  };
+};
+
+
+//// CREATE LEARNING NOTES
+
 export const CREATE_LEARNING_NOTE_REQUEST = "CREATE_LEARNING_NOTE_REQUEST";
 export const CREATE_LEARNING_NOTE_SUCCESS = "CREATE_LEARNING_NOTE_SUCCESS";
 export const CREATE_LEARNING_NOTE_FAILURE = "CREATE_LEARNING_NOTE_FAILURE";
@@ -38,42 +63,17 @@ export const createLearningNoteFailure = (error) => ({
   payload: error,
 });
 
-// Thunk to fetch learning notes from the backend
-export const fetchLearningNotes = () => {
-  const authToken = localStorage.getItem("token");
-
-  return (dispatch) => {
-    dispatch(fetchLearningNotesRequest());
-    axios
-      .get("http://127.0.0.1:8000/api/learning_notes/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${authToken}`,
-        },
-      })
-      .then((response) => {
-        const learningNotes = response.data;
-        dispatch(fetchLearningNotesSuccess(learningNotes));
-      })
-      .catch((error) => {
-        dispatch(fetchLearningNotesFailure(error.message));
-      });
-  };
-};
-
-// Thunk to create a new learning note
-export const createLearningNote = (newLearningNote) => {
-  const authToken = localStorage.getItem("token");
+export const createLearningNote = (newLearningNote, userInfo) => {
+  const { id, token } = userInfo;
   const headers = {
     "Content-Type": "application/json",
-    Authorization: `Token ${authToken}`,
+    Authorization: `Bearer ${token}`,
   };
 
   return (dispatch) => {
     dispatch(createLearningNoteRequest());
     axios
-      .post("http://localhost:8000/api/learning_notes/", newLearningNote, {
+      .post(`http://localhost:8000/api/learning_notes/create/${id}/`, newLearningNote, {
         headers: headers,
       })
       .then((response) => {
@@ -85,6 +85,9 @@ export const createLearningNote = (newLearningNote) => {
       });
   };
 };
+
+
+//// ARCHIVE LEARNING NOTES
 
 export const ARCHIVE_LEARNING_NOTE_REQUEST = "ARCHIVE_LEARNING_NOTE_REQUEST";
 export const ARCHIVE_LEARNING_NOTE_SUCCESS = "ARCHIVE_LEARNING_NOTE_SUCCESS";
@@ -102,26 +105,25 @@ export const archiveLearningNoteFailure = (error) => {
   return { type: ARCHIVE_LEARNING_NOTE_FAILURE, payload: error };
 };
 
-export const archiveLearningNote = (id) => {
-  const authToken = localStorage.getItem("token");
+export const archiveLearningNote = (noteId, userInfo) => {
+  console.log(userInfo);
+  const { token } = userInfo;
   const headers = {
     "Content-Type": "application/json",
-    Authorization: `Token ${authToken}`,
+    Authorization: `Bearer ${token}`,
   };
 
   return (dispatch) => {
     dispatch(archiveLearningNoteRequest());
 
     axios
-      .post(`http://localhost:8000/api/learning_notes/${id}/archive/`, null, {
+      .post(`http://localhost:8000/api/learning_notes/${noteId}/archive/`, null, {
         headers: headers,
       })
       .then((response) => {
-        // Dispatch archiveLearningNoteSuccess action with the learning note id
-        dispatch(archiveLearningNoteSuccess(id));
+        dispatch(archiveLearningNoteSuccess(noteId));
       })
       .catch((error) => {
-        // Dispatch archiveLearningNoteFailure action if archiving fails
         dispatch(
           archiveLearningNoteFailure(
             "Failed to archive learning note. Please try again."
@@ -130,6 +132,9 @@ export const archiveLearningNote = (id) => {
       });
   };
 };
+
+
+//// DELETE LEARNING NOTES
 
 export const DELETE_LEARNING_NOTE_REQUEST = "DELETE_LEARNING_NOTE_REQUEST";
 export const DELETE_LEARNING_NOTE_SUCCESS = "DELETE_LEARNING_NOTE_SUCCESS";
@@ -147,22 +152,22 @@ export const deleteLearningNoteFailure = (error) => {
   return { type: DELETE_LEARNING_NOTE_FAILURE, payload: error };
 };
 
-export const deleteLearningNote = (id) => {
-  const authToken = localStorage.getItem("token");
+export const deleteLearningNote = (noteId, userInfo) => {
+  const { token } = userInfo;
   const headers = {
     "Content-Type": "application/json",
-    Authorization: `Token ${authToken}`,
+    Authorization: `Bearer ${token}`,
   };
 
   return (dispatch) => {
     dispatch(deleteLearningNoteRequest());
 
     axios
-      .delete(`http://localhost:8000/api/learning_notes/${id}/delete/`, {
+      .delete(`http://localhost:8000/api/learning_notes/${noteId}/delete/`, {
         headers: headers,
       })
       .then((response) => {
-        dispatch(deleteLearningNoteSuccess(id));
+        dispatch(deleteLearningNoteSuccess(noteId));
       })
       .catch((error) => {
         dispatch(
@@ -173,6 +178,9 @@ export const deleteLearningNote = (id) => {
       });
   };
 };
+
+
+//// UPDATE LEARNING NOTES
 
 export const UPDATE_LEARNING_NOTE_REQUEST = "UPDATE_LEARNING_NOTE_REQUEST";
 export const UPDATE_LEARNING_NOTE_SUCCESS = "UPDATE_LEARNING_NOTE_SUCCESS";
@@ -192,26 +200,24 @@ export const updateLearningNoteFailure = (error) => ({
   payload: error,
 });
 
-export const updateLearningNote = (id, data) => {
-  const authToken = localStorage.getItem("token");
+export const updateLearningNote = (noteId, data, userInfo) => {
+  const { token } = userInfo;
   const headers = {
     "Content-Type": "application/json",
-    Authorization: `Token ${authToken}`,
+    Authorization: `Bearer ${token}`,
   };
 
   return (dispatch) => {
     dispatch(updateLearningNoteRequest());
     axios
-      .patch(`http://localhost:8000/api/learning_notes/${id}/`, data, {
+      .patch(`http://localhost:8000/api/learning_notes/update/${noteId}/`, data, {
         headers: headers,
       })
       .then((response) => {
         const updatedLearningNote = response.data;
-        console.log(updatedLearningNote);
         dispatch(updateLearningNoteSuccess(updatedLearningNote));
       })
       .catch((error) => {
-        console.log(error);
         dispatch(updateLearningNoteFailure('Failed to update learning note. Please try again.'));
       });
   };

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Button, Modal, Box, TextField, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Modal, Box, TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 import { createLearningNote } from "../actions/learningNoteActions";
@@ -11,6 +11,7 @@ const AddLearningNoteModal = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const userInfo = useSelector((state) => state.userLogin.userInfo);
 
   const toggleModal = () => {
     setModalOpen(!modalOpen);
@@ -19,17 +20,15 @@ const AddLearningNoteModal = () => {
   };
 
   const handleAddNote = async () => {
-    const currentUser = 1; // TODO: to be replaced with the currently logged in user
     const newNote = {
       title,
       content,
       created_at: new Date().toISOString(),
-      user: currentUser,
+      user: userInfo.id,
     };
 
     try {
-      dispatch(createLearningNote(newNote));
-      // Clear the form fields on successful submission
+      dispatch(createLearningNote(newNote, userInfo));
       setTitle("");
       setContent("");
       toggleModal();

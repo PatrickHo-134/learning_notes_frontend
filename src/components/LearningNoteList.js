@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   Container
 } from "@mui/material";
@@ -9,17 +10,25 @@ import AddLearningNoteModal from './AddLearningNoteModal';
 
 const LearningNoteList = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const learningNotes = useSelector((state) => state.learningNotes.learningNotes);
+  const userInfoFromState = useSelector((state) => state.userLogin.userInfo);
+  const userInfoFromLocalStorage = JSON.parse(localStorage.getItem('userInfo'));
+  // FIXME: fix issue with persisting data in Redux state so we can get it from state instead of localstorage
+  const userInfo = userInfoFromLocalStorage;
 
   useEffect(() => {
-    dispatch(fetchLearningNotes());
-  }, [dispatch]);
+    if (userInfo){
+      dispatch(fetchLearningNotes(userInfo));
+    } else {
+      navigate("/");
+    }
+  }, []);
 
   const handleAddNote = (newNote) => {
-    dispatch(createLearningNote(newNote)); // Dispatch the action to add the new note to Redux store
+    dispatch(createLearningNote(newNote));
   };
 
-  // If learningNotes is empty or still loading, display a message
   if (learningNotes.length === 0) {
      return <p>No learning notes found. Please create one.</p>;
    }

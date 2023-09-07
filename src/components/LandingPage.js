@@ -1,12 +1,22 @@
-import React from 'react';
-import LoginModal from './LoginModal';
+import React from "react";
+import LoginModal from "./LoginModal";
+import { Container, Row, Col } from "react-bootstrap";
+import RegisterModal from "./UserRegisterModal";
 
 const LandingPage = () => {
   return (
-    <div>
+    <Container>
       <h1>Welcome to the Learning Notes App</h1>
-      <LoginModal />
-    </div>
+      <Row>
+        <Col md={6}>
+          <LoginModal />
+        </Col>
+
+        <Col md={6}>
+          <RegisterModal />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

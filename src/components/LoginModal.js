@@ -1,34 +1,48 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { login } from '../actions/authActions';
-import { Modal, Box, TextField, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Modal, Box, TextField, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { login } from "../actions/userActions";
+import Message from "./Message";
 
 const LoginModal = () => {
   const [showModal, setShowModal] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    dispatch(login(username, password));
-    setShowModal(false);
-    navigate('/timeline');
+    dispatch(login(email, password));
   };
+
+  const onModalClose = () => {
+    setShowModal(false);
+
+  };
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { error, loading, userInfo } = userLogin;
+
+  useEffect(() => {
+    if (userInfo) {
+      setShowModal(false);
+      navigate(`/timeline/${userInfo.id}`);
+    }
+  }, [userInfo, navigate]);
 
   return (
     <div>
       <Button onClick={() => setShowModal(true)}>Log In</Button>
-      <Modal open={showModal} onClose={() => setShowModal(false)}>
+      <Modal open={showModal} onClose={onModalClose}>
         <Box
           sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            bgcolor: 'background.paper',
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
             boxShadow: 24,
             p: 4,
             borderRadius: 4,
@@ -36,10 +50,10 @@ const LoginModal = () => {
         >
           <h2>Login</h2>
           <TextField
-            label="Username"
+            label="Email"
             variant="outlined"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             fullWidth
           />
           <TextField
@@ -50,6 +64,7 @@ const LoginModal = () => {
             onChange={(e) => setPassword(e.target.value)}
             fullWidth
           />
+          {error && <Message variant="outlined" severity="error">{error}</Message>}
           <Button variant="contained" color="primary" onClick={handleLogin}>
             Log In
           </Button>

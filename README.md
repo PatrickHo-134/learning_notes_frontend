@@ -115,6 +115,15 @@ Add `AddLearningNoteModal` component to **LearningNoteList.js**
 - In **LearningNoteCard.js**, use `dangerouslySetInnerHTML` to display the content `LearningNoteCard`
 - Add style for ReactQuill components in **src/App.css**
 
+## 12. Update frontend to work with new authentication mechanism
+- Add `userLogin` to Redux's `store`
+- Rename **authAction.js** to **userActions.js**
+- Create `userLoginReducer` in **userReducer.js**
+- Add `userLogin` to `rootReducer` in **reducers/index.js**
+- Add **Loader.js** and **Message.js** components
+- Fix `fetchLearningNote` function to only fetch learning notes of an authenticated user.
+
+
 # Questions:
 ## 1. How to fix issue with 'Insufficient permissions' in VSCode?
 Run this command

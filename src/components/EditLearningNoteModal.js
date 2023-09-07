@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Modal, Box, TextField, Button } from "@mui/material";
 
 import { updateLearningNote } from "../actions/learningNoteActions";
@@ -9,9 +9,10 @@ const EditLearningNoteModal = ({ learningNote, onClose }) => {
   const [title, setTitle] = useState(learningNote.title);
   const [content, setContent] = useState(learningNote.content);
   const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.userLogin.userInfo);
 
   const handleSave = () => {
-    dispatch(updateLearningNote(learningNote.id, { title, content }));
+    dispatch(updateLearningNote(learningNote.id, { title, content }, userInfo));
     onClose();
   };
 

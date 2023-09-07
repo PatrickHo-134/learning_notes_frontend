@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Card,
   CardHeader,
@@ -22,6 +22,7 @@ const LearningNoteCard = ({ learningNote }) => {
   const { user, created_at, title, content, updated_at } = learningNote;
   const [anchorEl, setAnchorEl] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const userInfo = useSelector((state) => state.userLogin.userInfo);
   const dispatch = useDispatch();
 
   const handleMenuOpen = (event) => {
@@ -33,12 +34,12 @@ const LearningNoteCard = ({ learningNote }) => {
   };
 
   const handleArchive = () => {
-    dispatch(archiveLearningNote(learningNote.id));
+    dispatch(archiveLearningNote(learningNote.id, userInfo));
     handleMenuClose();
   };
 
   const handleDelete = () => {
-    dispatch(deleteLearningNote(learningNote.id));
+    dispatch(deleteLearningNote(learningNote.id, userInfo));
     handleMenuClose();
   };
 
