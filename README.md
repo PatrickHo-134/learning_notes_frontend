@@ -123,6 +123,20 @@ Add `AddLearningNoteModal` component to **LearningNoteList.js**
 - Add **Loader.js** and **Message.js** components
 - Fix `fetchLearningNote` function to only fetch learning notes of an authenticated user.
 
+## 13. Add NavBar and convert Login/Register modal to page
+- Create a new component `NavBar` in **NabBar.js**
+- Add `Login`, `Logout` and `Register` button to the NavBar
+- Add `logout` action in **userActions.js**
+- Display username if user is logged in
+- Convert `Login` modal to `Login` page
+- Convert `Register` modal to `Register` page
+- Remove `Login` and `Register` modal from **LandingPage.js**
+- Add `register` action in **userActions.js**
+- Add `path` for Login and Register page in **App.js**
+- Create `userRegisterReducer` in **userReducer.js**
+- Update `learningNoteReducer` to remove learning notes data when user logs out and set up initial state when user registers successfully.
+- Add `userRegisterReducer` to `rootReducer`
+
 
 # Questions:
 ## 1. How to fix issue with 'Insufficient permissions' in VSCode?

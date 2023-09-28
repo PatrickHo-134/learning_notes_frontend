@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 import learningNoteReducer from './learningNoteReducer';
-import userLoginReducer from './userReducer';
+import { userRegisterReducer, userLoginReducer } from './userReducer';
 
 const rootReducer = combineReducers({
   learningNotes: learningNoteReducer,
   userLogin: userLoginReducer,
-  // Add other reducers here if you have more features
+  userRegister: userRegisterReducer
 });
 
 export default rootReducer;

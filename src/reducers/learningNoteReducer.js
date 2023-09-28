@@ -15,6 +15,7 @@ import {
   UPDATE_LEARNING_NOTE_SUCCESS,
   UPDATE_LEARNING_NOTE_FAILURE,
 } from "../actions/learningNoteActions";
+import { LOGOUT, REGISTER_SUCCESS } from "../actions/userActions";
 
 const initialState = {
   learningNotes: [],
@@ -85,6 +86,13 @@ const learningNoteReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+
+    case LOGOUT:
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }

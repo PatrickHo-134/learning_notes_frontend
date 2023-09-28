@@ -29,16 +29,12 @@ const LearningNoteList = () => {
     dispatch(createLearningNote(newNote));
   };
 
-  if (learningNotes.length === 0) {
-     return <p>No learning notes found. Please create one.</p>;
-   }
-
   return (
     <Container maxWidth="md">
       <h1>Timeline</h1>
       <AddLearningNoteModal onAddNote={handleAddNote} />
       {learningNotes.length === 0 ? (
-        <p>Your Time Line is empty. Let's create your first note.</p>
+        <p>Your Timeline is empty. Let's create your first note.</p>
       ) : (
         learningNotes.map((note) => <LearningNoteCard key={note.id} learningNote={note} />)
       )}
